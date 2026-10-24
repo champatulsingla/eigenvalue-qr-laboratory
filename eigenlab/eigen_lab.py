@@ -33,7 +33,7 @@ class QRFactorization:
                 r[i][j]=q[:,i]@self.A[:,j]
         return q,r
 
-    def modified_gramschmidt(self):
+    def modified_gramschmidt(self, reorthogonalize=False, tol=1e-8):
         q=np.zeros((self.n_rows, self.n_columns))
         r=np.zeros((self.n_columns,self.n_columns))
         for i in range(self.n_columns):
@@ -46,23 +46,44 @@ class QRFactorization:
             for j in range(i+1,self.n_columns):
                 r[i,j]=q[:,i].T @ q[:,j]
                 q[:,j]=q[:,j]-r[i,j]*q[:,i]
-        return q,r
+        
+        if self.orthogonality(q)>tol and reorthogonalize:
+            q2=np.zeros((self.n_rows, self.n_columns))
+            r2=np.zeros((self.n_columns,self.n_columns))
+            for i in range(self.n_columns):
+                q2[:,i]=q[:,i]
+            for i in range(self.n_columns):
+                r2[i,i]=np.linalg.norm(q2[:,i])
+                q2[:,i]=q2[:,i]/r2[i,i]
+                for j in range(i+1,self.n_columns):
+                    r2[i,j]=q2[:,i].T @ q2[:,j]
+                    q2[:,j]=q2[:,j]-r2[i,j]*q2[:,i]
+            return q2,r2@r
+        else:
+            return q,r
 
     def reconstruction(self, q, r):
-        return np.linalg.norm(self.A-q@r)
+        if q is not None:
+            return np.linalg.norm(self.A-q@r)
+        else: 
+            return None
     def orthogonality(self,q):
-        return np.linalg.norm(q.T@q-np.eye(self.n_columns))
+        if q is not None:
+            return np.linalg.norm(q.T@q-np.eye(self.n_columns))
+        else:
+            return None
 
 if __name__=="__main__":
-    a=np.random.rand(100,100)
+    a=np.random.rand(100,90)
     obj=QRFactorization(a)
     q,r=obj.gramschmidt()
-    q_MGS, r_MGS=obj.modified_gramschmidt()
+    q_MGS, r_MGS=obj.modified_gramschmidt(reorthogonalize=True, tol=1e-8)
     o_error=obj.orthogonality(q)
     r_error=obj.reconstruction(q,r)
     r_error_MGS=obj.reconstruction(q_MGS, r_MGS)
     o_error_MGS=obj.orthogonality(q_MGS)
     print(o_error, r_error, o_error_MGS, r_error_MGS)
+    
 
 
 
