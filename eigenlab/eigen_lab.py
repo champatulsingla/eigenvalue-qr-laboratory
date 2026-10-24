@@ -51,8 +51,18 @@ class QRFactorization:
     def reconstruction(self, q, r):
         return np.linalg.norm(self.A-q@r)
     def orthogonality(self,q):
-        return np.linalg.norm(q.T@q-np.eye(self.n_rows))
+        return np.linalg.norm(q.T@q-np.eye(self.n_columns))
 
+if __name__=="__main__":
+    a=np.random.rand(100,100)
+    obj=QRFactorization(a)
+    q,r=obj.gramschmidt()
+    q_MGS, r_MGS=obj.modified_gramschmidt()
+    o_error=obj.orthogonality(q)
+    r_error=obj.reconstruction(q,r)
+    r_error_MGS=obj.reconstruction(q_MGS, r_MGS)
+    o_error_MGS=obj.orthogonality(q_MGS)
+    print(o_error, r_error, o_error_MGS, r_error_MGS)
 
 
 
