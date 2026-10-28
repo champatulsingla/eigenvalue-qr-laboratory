@@ -1,5 +1,8 @@
 # Atul
-# Power Iteration Method
+# Power Iteration Method for finding the dominant eigenvalue and eigenvector of a matrix A.
+import numpy as np
+class PowerIteration:
+    
 
 
 
