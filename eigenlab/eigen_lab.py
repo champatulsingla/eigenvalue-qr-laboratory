@@ -53,6 +53,42 @@ class PowerIteration:
         return eigenvalue, x, history
 
 
+if __name__ == "__main__":
+
+    # Define the matrix and initial vector
+    n = 5
+    A = np.random.rand(n, n)
+    x0 = np.random.rand(n)
+
+    # Create an object of the PowerIteration class
+    obj = PowerIteration(A)
+
+    # Run the power iteration method
+    eigenvalue, eigenvector, history = obj.power_iteration(x0)
+
+    # Print the last iteration
+    print("\n--- Last Iteration ---")
+    print("\nIteration | Eigenvalue | Change | Residual")
+
+    result = len(history)
+    value, change, residual = history[-1]
+
+    print(
+        f"{result:9d} | {value:10.6f} | "
+        f"{change:.3e} | {residual:.3e}"
+    )
+
+    print(" Eigenvalue:", eigenvalue)
+    print("Corresponding Eigenvector:", eigenvector)
+    print("Change:", change)
+    print("Residual:", residual)
+
+    # Compare with NumPy's result
+    values, vectors = np.linalg.eig(np.array(A, dtype=float))
+    index = np.argmax(np.abs(values))
+
+    print("\nNumPy reference eigenvalue:", values[index])
+
 
 
 
