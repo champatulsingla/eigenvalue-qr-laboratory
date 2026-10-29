@@ -20,7 +20,6 @@ class PowerIteration:
             raise ValueError("Initial vector x0 must have the same dimension as the number of columns in matrix A.")
         if np.linalg.norm(x) == 0:
             raise ValueError("Initial vector x0 must not be the zero vector.")
-        
         x = x / np.linalg.norm(x)  # normalize the initial vector
 
         history = []  # to store the history of eigenvalues
@@ -30,7 +29,7 @@ class PowerIteration:
         for i in range(max_iter):
 
             y = self.A @ x  # compute the matrix-vector product
-            
+
             y_norm = np.linalg.norm(y)
             if y_norm == 0:
                 raise ValueError("The new vector has zero norm, cannot normalize.")
@@ -44,7 +43,7 @@ class PowerIteration:
             residual = np.linalg.norm(np.dot(self.A, x_new) - eigenvalue * x_new)  # compute the residual
 
             history.append((eigenvalue, change, residual))  # store the eigenvalue, change, and residual
-            
+
             x = x_new  # update the vector for the next iteration 
         # Check for convergence
             if change < tol :
@@ -88,6 +87,7 @@ if __name__ == "__main__":
     index = np.argmax(np.abs(values))
 
     print("\nNumPy reference eigenvalue:", values[index])
+
 
 
 
