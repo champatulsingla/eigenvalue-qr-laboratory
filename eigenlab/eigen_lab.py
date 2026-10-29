@@ -82,11 +82,12 @@ if __name__ == "__main__":
     print("Change:", change)
     print("Residual:", residual)
 
-    # Compare with NumPy's result
+    # Compare to  NumPy's result
     values, vectors = np.linalg.eig(np.array(A, dtype=float))
     index = np.argmax(np.abs(values))
 
     print("\nNumPy reference eigenvalue:", values[index])
+
 
 
 
