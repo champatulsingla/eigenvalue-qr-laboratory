@@ -1,47 +1,59 @@
-import eigen_lab
+try:
+  from . import eigen_lab
+
+except ImportError:
+  import eigen_lab
+
+
 import numpy as np
 class Testing:
 
+  def __init__(self, random_state=2026):
+    self.random_state=random_state
 
   
-  def testQR_Factorization(self, random_state=2026, A=None, dim=(5,3,3), method='modified_gramschmidt'):
+  def testQR_Factorization(self, A=None, dim=(5,3,3), method='modified_gramschmidt'):
     if A is None:
-      rng=np.random.default_rng(seed=random_state)
+      rng=np.random.default_rng(seed=self.random_state)
       A=rng.random(dim, dtype=float)
 
     objQRF=eigen_lab.QRFactorization(A[0])
-    Q=np.zeros((dim[0]))
-    R=np.zeros((dim[0]))
-    reconstruction_errors=np.zeros((dim[0]))
-    orthogonality_errors=np.zeros((dim[0]))
-
+    Q=[0]*len(A)
+    R=[0]*len(A)
+    reconstruction_errors=np.zeros((len(A)))
+    orthogonality_errors=np.zeros((len(A)))
+    triangularity_errors=np.zeros((len(A)))
 
     if method=='gramschmidt':
       Q[0], R[0]=objQRF.gramschmidt()
       reconstruction_errors[0]=objQRF.reconstruction(Q[0],R[0])
       orthogonality_errors[0]=objQRF.orthogonality(Q[0])
+      triangularity_errors[0]=objQRF.triangularity(R[0])
 
-      for i in range(1,dim[0]):
+      for i in range(1,len(A)):
         Q[i], R[i]=objQRF.gramschmidt()
         reconstruction_errors[i]=objQRF.reconstruction(Q[i],R[i])
         orthogonality_errors[i]=objQRF.orthogonality(Q[i])
+        triangularity_errors[i]=objQRF.triangularity(R[i])
 
 
     elif method=='modified_gramschmidt':
       Q[0], R[0]=objQRF.modified_gramschmidt()
       reconstruction_errors[0]=objQRF.reconstruction(Q[0],R[0])
       orthogonality_errors[0]=objQRF.orthogonality(Q[0])
+      triangularity_errors[0]=objQRF.triangularity(R[0])
 
-      for i in range(1,dim[0]):
+      for i in range(1,len(A)):
         Q[i], R[i]=objQRF.modified_gramschmidt()
         reconstruction_errors[i]=objQRF.reconstruction(Q[i],R[i])
         orthogonality_errors[i]=objQRF.orthogonality(Q[i])
+        triangularity_errors[i]=objQRF.triangularity(R[i])
 
 
     else:
       raise ValueError("Invalid method")
-    return Q, R, reconstruction_errors, orthogonality_errors
-
+    return Q, R, reconstruction_errors, orthogonality_errors, triangularity_errors
+    
 
 
     
@@ -64,5 +76,14 @@ class Testing:
 
 
 
+if __name__=="__main__":
+  obj=Testing()
+  results=obj.testQR_Factorization()
+  print("Orthogonalization errors:",results[2])
+  print("Reconstruction errors:", results[3])
+  print("Triangularity errors:", results[4])
 
-  
+  A=np.array([[1,2,3],[4,5,6],[5,7,9]], dtype=float)
+  q,r=eigen_lab.QRFactorization(A).modified_gramschmidt()
+  if q is None:
+      print("Rank deficient matrix detected successfully")
