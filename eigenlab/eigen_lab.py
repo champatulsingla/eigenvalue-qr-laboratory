@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 # Atul
 
 
@@ -83,7 +84,68 @@ class QRFactorization:
 
 
 # Ayush
-
+class QR_Iteration():
+    def __init__(self, A, max_iter, tol):
+        self.A=A
+        self.max_iter = max_iter
+        self.tol = tol
+        self.rows=len(self.A)
+        self.cols=len(A[0])
+        if self.rows != self.cols:
+            raise ValueError("Matrix should be a square matrix")
+        self.n = self.rows
+        self.qr=QRFactorization(A)
+        # eigen values calculated using numpy
+        ev = np.linalg.eigvals(np.array(A, dtype=float))
+        self.np_eigs = ev[np.argsort(-np.abs(ev))].real
+        # for storing diagonals of every iteration 
+        self.diag_history = []     
+        self.count = 0
+        self.converged = False
+    def stopping_Check(self):
+            sum = 0
+            for i in range(self.n):
+                for j in range(self.n):
+                    if i > j:
+                        sum += (self.A[i][j]**2)
+            sum = sum**0.5
+            if sum < self.tol:
+                return True
+            return False
+    def iterate(self):
+        self.count = 0
+        while self.count < self.max_iter and not self.stopping_Check():
+            self.count+=1
+            Q,R = self.qr.modified_gramschmidt(reorthogonalize=True,tol = self.tol)
+            self.A = R@Q
+            # updation in qrFactorisation object
+            self.qr.A = self.A
+            d = np.diag(self.A)
+            self.diag_history.append(d[np.argsort(-np.abs(d))])
+        self.converged = self.stopping_Check()
+        return self.converged
+    def plot_convergence(self):
+        history = np.array(self.diag_history)
+        if len(history) == 0:
+            print(" Please call iterate first ")
+            return      
+        k = np.arange(len(history))
+        # iteration start from 1
+        k+=1
+        fig, axes = plt.subplots(1, self.n, figsize=(5 * self.n, 4))
+        axes = np.atleast_1d(axes)
+        for i in range(self.n):
+            axes[i].plot(k, history[:, i], label=f"QR iteration, diag[{i}]")
+            axes[i].axhline(self.np_eigs[i], color="r", linestyle="--",
+                            label=f"NumPy eigenvalue = {self.np_eigs[i]:.4f}")
+            axes[i].set_ylabel(f"$\\lambda_{i+1}$")
+            axes[i].legend(loc="best")
+            axes[i].grid(True)
+            axes[i].set_xlabel("Iteration")
+        fig.suptitle("Convergence of diagonal entries to eigenvalues")
+        plt.tight_layout()
+        plt.show()
+ 
 
 
 
