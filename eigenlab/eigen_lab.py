@@ -20,7 +20,7 @@ class QRFactorization:
 
     def gramschmidt(self):
         if self.n_columns>self.n_rows:
-            return None, None
+            raise ValueError("Number of columns must be less than or equal the number of rows.")
         q=np.zeros((self.n_rows,self.n_columns),dtype=float)
         for j in range(self.n_columns):
             s=np.zeros((self.n_rows),dtype=float)
@@ -38,7 +38,7 @@ class QRFactorization:
 
     def modified_gramschmidt(self, reorthogonalize=False, tol=1e-8):
         if self.n_columns>self.n_rows:
-            return None, None
+            raise ValueError("Number of columns must be less than or equal the number of rows.")
         q=np.zeros((self.n_rows, self.n_columns))
         r=np.zeros((self.n_columns,self.n_columns))
         for i in range(self.n_columns):
