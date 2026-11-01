@@ -39,6 +39,7 @@ class QRFactorization:
         for i in range(self.n_columns):   # Computing the R matrix
             for j in range(i,self.n_columns):
                 r[i][j]=q[:,i]@self.A[:,j]
+        
         return q,r
 
     def modified_gramschmidt(self, reorthogonalize=False, tol=1e-8):
