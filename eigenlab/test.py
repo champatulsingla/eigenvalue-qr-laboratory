@@ -28,26 +28,26 @@ class Testing:
       Q[0], R[0]=objQRF.gramschmidt()
       reconstruction_errors[0]=objQRF.reconstruction(Q[0],R[0])
       orthogonality_errors[0]=objQRF.orthogonality(Q[0])
-      triangularity_errors[0]=objQRF.triangularity(R[0])
+      triangularity_errors[0]=objQRF.triangularity(Q[0])
 
       for i in range(1,len(A)):
         Q[i], R[i]=objQRF.gramschmidt()
         reconstruction_errors[i]=objQRF.reconstruction(Q[i],R[i])
         orthogonality_errors[i]=objQRF.orthogonality(Q[i])
-        triangularity_errors[i]=objQRF.triangularity(R[i])
+        triangularity_errors[i]=objQRF.triangularity(Q[i])
 
 
     elif method=='modified_gramschmidt':
       Q[0], R[0]=objQRF.modified_gramschmidt()
       reconstruction_errors[0]=objQRF.reconstruction(Q[0],R[0])
       orthogonality_errors[0]=objQRF.orthogonality(Q[0])
-      triangularity_errors[0]=objQRF.triangularity(R[0])
+      triangularity_errors[0]=objQRF.triangularity(Q[0])
 
       for i in range(1,len(A)):
         Q[i], R[i]=objQRF.modified_gramschmidt()
         reconstruction_errors[i]=objQRF.reconstruction(Q[i],R[i])
         orthogonality_errors[i]=objQRF.orthogonality(Q[i])
-        triangularity_errors[i]=objQRF.triangularity(R[i])
+        triangularity_errors[i]=objQRF.triangularity(Q[i])
 
 
     else:
@@ -84,6 +84,7 @@ if __name__=="__main__":
   print("Triangularity errors:", results[4])
 
   A=np.array([[1,2,3],[4,5,6],[5,7,9]], dtype=float)
-  q,r=eigen_lab.QRFactorization(A).modified_gramschmidt()
-  if q is None:
+  try:
+    q,r=eigen_lab.QRFactorization(A).modified_gramschmidt()
+  except ValueError:
       print("Rank deficient matrix detected successfully")
