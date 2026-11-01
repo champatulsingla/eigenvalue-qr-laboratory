@@ -17,7 +17,6 @@ class Testing:
       rng=np.random.default_rng(seed=self.random_state)
       A=rng.random(dim, dtype=float)
 
-    objQRF=eigen_lab.QRFactorization(A[0])
     Q=[0]*len(A)
     R=[0]*len(A)
     reconstruction_errors=np.zeros((len(A)))
@@ -25,12 +24,8 @@ class Testing:
     triangularity_errors=np.zeros((len(A)))
 
     if method=='gramschmidt':
-      Q[0], R[0]=objQRF.gramschmidt()
-      reconstruction_errors[0]=objQRF.reconstruction(Q[0],R[0])
-      orthogonality_errors[0]=objQRF.orthogonality(Q[0])
-      triangularity_errors[0]=objQRF.triangularity(Q[0])
-
-      for i in range(1,len(A)):
+      for i in range(0,len(A)):
+        objQRF=eigen_lab.QRFactorization(A[i])
         Q[i], R[i]=objQRF.gramschmidt()
         reconstruction_errors[i]=objQRF.reconstruction(Q[i],R[i])
         orthogonality_errors[i]=objQRF.orthogonality(Q[i])
@@ -38,12 +33,8 @@ class Testing:
 
 
     elif method=='modified_gramschmidt':
-      Q[0], R[0]=objQRF.modified_gramschmidt()
-      reconstruction_errors[0]=objQRF.reconstruction(Q[0],R[0])
-      orthogonality_errors[0]=objQRF.orthogonality(Q[0])
-      triangularity_errors[0]=objQRF.triangularity(Q[0])
-
-      for i in range(1,len(A)):
+      for i in range(0,len(A)):
+        objQRF=eigen_lab.QRFactorization(A[i])
         Q[i], R[i]=objQRF.modified_gramschmidt()
         reconstruction_errors[i]=objQRF.reconstruction(Q[i],R[i])
         orthogonality_errors[i]=objQRF.orthogonality(Q[i])
@@ -79,12 +70,13 @@ class Testing:
 if __name__=="__main__":
   obj=Testing()
   results=obj.testQR_Factorization()
-  print("Orthogonalization errors:",results[2])
-  print("Reconstruction errors:", results[3])
+  print("Orthogonalization errors:",results[3])
+  print("Reconstruction errors:", results[2])
   print("Triangularity errors:", results[4])
 
   A=np.array([[1,2,3],[4,5,6],[5,7,9]], dtype=float)
   try:
     q,r=eigen_lab.QRFactorization(A).modified_gramschmidt()
+    print("Failed to detect rank deficient matrix.")
   except ValueError:
       print("Rank deficient matrix detected successfully")
