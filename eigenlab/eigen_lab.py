@@ -1,3 +1,4 @@
+import numpy as np
 # Atul
 
 
@@ -6,18 +7,20 @@
 
 
 # Augastya
-import numpy as np
+
 
 
 class QRFactorization:
     def __init__(self, A):
-        self.A=A
+        self.A=np.array(A, dtype=float)
         self.n_columns=len(A[0])
         self.n_rows=len(self.A)
         
 
 
     def gramschmidt(self):
+        if self.n_columns>self.n_rows:
+            return None, None
         q=np.zeros((self.n_rows,self.n_columns),dtype=float)
         for j in range(self.n_columns):
             s=np.zeros((self.n_rows),dtype=float)
@@ -34,6 +37,8 @@ class QRFactorization:
         return q,r
 
     def modified_gramschmidt(self, reorthogonalize=False, tol=1e-8):
+        if self.n_columns>self.n_rows:
+            return None, None
         q=np.zeros((self.n_rows, self.n_columns))
         r=np.zeros((self.n_columns,self.n_columns))
         for i in range(self.n_columns):
@@ -70,6 +75,11 @@ class QRFactorization:
     def orthogonality(self,q):
         if q is not None:
             return np.linalg.norm(q.T@q-np.eye(self.n_columns))
+        else:
+            return None
+    def triangularity(self, r):
+        if r is not None:
+            return np.linalg.norm(r-np.triu(r))
         else:
             return None
 
