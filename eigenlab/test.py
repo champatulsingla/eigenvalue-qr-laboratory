@@ -1,5 +1,5 @@
 import eigen_lab
-
+import matplotlib.pyplot as plt
 from scipy.linalg import hilbert
 import numpy as np
 class Testing:
@@ -58,7 +58,15 @@ class Testing:
 
 
 
-  def testQR_iteration(self):
-    pass
+  def testQR_iteration(self,A,max_iter,tol):
+    test_object = eigen_lab.QR_Iteration(A,max_iter,tol)
+    try:
+      test_object.iterate()
+      print("convergence is : ",test_object.converged)
+      test_object.plot_convergence()
+      
+    except ValueError as e:
+      print("QR iteration stopped",e)
+
 
 

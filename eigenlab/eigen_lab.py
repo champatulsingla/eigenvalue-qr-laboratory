@@ -97,7 +97,7 @@ class QR_Iteration():
         self.qr=QRFactorization(A)
         # eigen values calculated using numpy
         ev = np.linalg.eigvals(np.array(A, dtype=float))
-        self.np_eigs = ev[np.argsort(-np.abs(ev))].real
+        self.np_eigs = ev[np.argsort(-np.abs(ev))]
         # for storing diagonals of every iteration 
         self.diag_history = []     
         self.count = 0
