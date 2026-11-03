@@ -86,14 +86,12 @@ class QRFactorization:
 # Ayush
 class QR_Iteration():
     def __init__(self, A, max_iter, tol):
-        self.A=A
+        self.A = np.array(A,dtype=float)
+        if self.A.ndim!=2 or self.A.shape[0] != self.A.shape[1]:
+            raise ValueError("Expecting a 2D square matrix")
+        self.n = self.A.shape[0]
         self.max_iter = max_iter
         self.tol = tol
-        self.rows=len(self.A)
-        self.cols=len(A[0])
-        if self.rows != self.cols:
-            raise ValueError("Matrix should be a square matrix")
-        self.n = self.rows
         self.qr=QRFactorization(A)
         # eigen values calculated using numpy
         ev = np.linalg.eigvals(np.array(A, dtype=float))
