@@ -3,10 +3,11 @@
 import numpy as np
 class PowerIteration:
     def __init__(self, A):
-        self.A = np.array(A, dtype = float)
-        # check the matrix is square
-        if self.A.shape[0] != self.A.shape[1]:
-           raise ValueError("Matrix A must be a square matrix.")
+        self.A = np.asarray(A, dtype=np.result_type(A, float))
+
+        # Check whether the matrix is square
+        if self.A.ndim != 2 or self.A.shape[0] != self.A.shape[1]:
+            raise ValueError("Matrix A must be a square matrix.")
     def rayleigh_quotient(self, x):
         Ax = self.A @ x
         denominator = x.T @ x
