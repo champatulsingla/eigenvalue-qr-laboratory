@@ -1,6 +1,8 @@
 # Atul
 # Power Iteration Method for finding the dominant eigenvalue and eigenvector of a matrix A.
 import numpy as np
+import warnings
+
 class PowerIteration:
     def __init__(self, A):
         self.A = np.asarray(A, dtype=np.result_type(A, float))
@@ -29,7 +31,24 @@ class PowerIteration:
 
             y_norm = np.linalg.norm(y)
 
-            if y_norm < 1e-14:
+            # Check if vector is annihilated by A
+            if y_norm < 1e-16:
+                # Calculate norm of matrix A to check if A is a zero matrix
+                matrix_norm = np.linalg.norm(self.A)
+                
+                if matrix_norm > 1e-16:
+                    warnings.warn(
+                        f"Vector x was annihilated by A at iteration {i} (lies in null space). "
+                        f"Since matrix A is non-zero, try re-running with a different initial vector x0.",
+                        UserWarning
+                    )
+                else:
+                    warnings.warn(
+                        f"Matrix A is effectively zero (norm = {matrix_norm:.2e}). "
+                        f"Dominant eigenvalue is 0.0.",
+                        UserWarning
+                    )
+
                 history.append((0.0, 0.0))
                 return 0.0, x, history
             x_new = y / y_norm    # normalize the new vector
