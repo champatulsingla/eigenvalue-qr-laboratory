@@ -1,9 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
-# Atul
-# Power Iteration Method for finding the dominant eigenvalue and eigenvector of a matrix A.
-import numpy as np
 import warnings
+# Power Iteration Method for finding the dominant eigenvalue and eigenvector of a matrix A.
+
 
 class PowerIteration:
     def __init__(self, A):
@@ -83,8 +82,6 @@ class PowerIteration:
 
 
 
-# Augastya
-
 
 
 class QRFactorization:
@@ -158,8 +155,6 @@ class QRFactorization:
 
 
 
-
-# Ayush
 class QR_Iteration():
     def __init__(self, A, max_iter, tol):
         self.A = np.array(A,dtype=float)
