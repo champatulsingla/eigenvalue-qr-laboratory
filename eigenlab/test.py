@@ -52,6 +52,3 @@ class Testing:
   def testQR_iteration(self):
     pass
 
-if __name__ == "__main__":
-    tester = Testing()
-    tester.test_PowerMethod()
