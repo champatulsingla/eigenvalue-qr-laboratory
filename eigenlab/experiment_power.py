@@ -80,3 +80,17 @@ plt.grid(True)
 plt.legend()
 plt.tight_layout()
 plt.savefig("power_iteration_spectral_ratio.png", dpi=300)
+
+# Experiment 3: Run the selected special-case checks from test.py
+# This checks spectral ratios, complex conjugates, a defective matrix,
+# and an initial vector that is annihilated by the matrix.
+print("\nExperiment 3: Special-case checks from test.py")
+tester = test.Testing()
+tests_passed = tester.test_PowerMethod(tol=TOL, max_iter= MAX_ITER)
+
+print("\nAll experiment plots saved.")
+print("1. power_iteration_convergence.png")
+print("2. power_iteration_spectral_ratio.png")
+print("Special-case tests:", "PASS" if tests_passed else "CHECK FAILED TESTS")
+
+plt.show()
