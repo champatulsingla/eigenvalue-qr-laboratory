@@ -1,6 +1,6 @@
 # Contributions
 
-## Ayush
+## Ayush (MA26M007)
 **Responsibilities:** QR iteration implementation, test covergence 
 
 **Issues:** QR iteration #3
@@ -13,9 +13,19 @@
 **Reviews:**
 - Issue #4 (QR Factorization, by Augastya): suggested handling the rows < columns edge case and moving `import numpy` to the top of the file
 
-## Aagastya
+## Augastya (MA26M006)
+**Responsibilities:** Implementing QR Factorization through Object-Oriented Programming, testing orthogonality and reconstruction errors, and experimenting with various examples.
 
-## Atul
+**Issues:** QR Factorization #4
 
-## Baleshwar
+
+**Pull Requests:** 
+- Feature/qr factorization- #1
+
+**Reviews:**
+- Issue #3 (QR iteration, by Ayush): Suggested converting list of lists into numpy array while taking input.
+- Issue #6 (Power Method, by Atul): Suggested raising a warning in case initial vector is annihilated by the input matrix.
+## Atul (MA26M005)
+
+## Baleshwar (MA26M008)
 ...
