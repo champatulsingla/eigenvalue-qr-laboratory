@@ -26,6 +26,13 @@
 - Issue #3 (QR iteration, by Ayush): Suggested converting list of lists into numpy array while taking input.
 - Issue #6 (Power Method, by Atul): Suggested raising a warning in case initial vector is annihilated by the input matrix.
 ## Atul (MA26M005)
+**Responsibilities:** Power iteration, test convergence
 
+**Issues:** Power Method #6
+
+**Pull Requests:** Power method - #2
+
+**Reviews**
+-Issue #4 (QR Factorization, by Augastya): suggest to add comments to the code explaining the main steps.
 ## Baleshwar (MA26M008)
 ...
