@@ -43,19 +43,35 @@ class Testing:
     
 
 
-    
-
-
-
-
-
-
-
-  def test_PowerMethod(self):
-    pass
-
-
-
+  def test_PowerMethod(self, A=None, x0=None, tol=1e-8, max_iter=10000):
+              if A is None:
+                  A = np.array([[5.0, 0.0], [0.0, 2.0]])
+              if x0 is None:
+                  x0 = np.array([1.0, 1.0])
+      
+            
+              method = eigen_lab.PowerIteration(A)
+              value, vector, history = method.power_iteration(x0, tol, max_iter)
+      
+              reference_values = np.linalg.eigvals(A)
+              reference_value = reference_values[np.argmax(np.abs(reference_values))]
+      
+              residual = np.linalg.norm(A @ vector - value * vector)
+              eigenvalue_error = abs(value - reference_value)
+      
+              passed = residual < tol and eigenvalue_error < 10 * tol
+      
+              print("Power Iteration Test")
+              print("Computed eigenvalue:", value)
+              print("Reference eigenvalue:", reference_value)
+              print("Computed eigenvector:", vector)
+              print("Number of iterations:", len(history))
+              print("Final residual:", residual)
+              print("Eigenvalue error:", eigenvalue_error)
+              print("Test result:", "PASS" if passed else "FAIL")
+      
+              return value, vector, history, residual, passed
+  
 
 
   def testQR_iteration(self,A,max_iter,tol):
