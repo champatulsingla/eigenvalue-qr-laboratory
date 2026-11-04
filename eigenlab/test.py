@@ -43,14 +43,6 @@ class Testing:
     
 
 
-    
-
-
-
-
-
-
-
   def test_PowerMethod(self, A=None, x0=None, tol=1e-8, max_iter=10000):
               if A is None:
                   A = np.array([[5.0, 0.0], [0.0, 2.0]])
@@ -80,11 +72,6 @@ class Testing:
       
               return value, vector, history, residual, passed
   
-
-
-
-
-
 
 
   def testQR_iteration(self,A,max_iter,tol):
