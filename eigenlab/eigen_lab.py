@@ -155,7 +155,7 @@ class QRFactorization:
 
 
 
-class QR_Iteration():
+class QR_Iteration:
     def __init__(self, A, max_iter, tol):
         self.A = np.array(A,dtype=float)
         if self.A.ndim!=2 or self.A.shape[0] != self.A.shape[1]:
