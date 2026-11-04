@@ -48,3 +48,35 @@ plt.grid(True)
 
 plt.tight_layout()
 plt.savefig("power_iteration_convergence.png", dpi=300)
+
+
+# Experiment 2: Effect of the spectral ratio on convergence
+ratios = [0.50, 0.90, 0.99]
+iteration_counts = []
+
+plt.figure(figsize=(7, 5))
+
+for ratio in ratios:
+    A = np.diag([1.0, ratio])
+    x0 = np.array([1.0, 1.0])
+
+    eigenvalue, eigenvector, history = eigen_lab.PowerIteration(A).power_iteration(
+        x0, tol=TOL, max_iter=MAX_ITER
+    )
+
+    residuals = [item[1] for item in history]
+    iteration_counts.append(len(history))
+
+    plt.semilogy(
+        range(1, len(history) + 1), residuals,
+        label=f"Spectral ratio = {ratio:.2f}"
+    )
+    print(f"Spectral ratio {ratio:.2f}: {len(history)} iterations")
+
+plt.xlabel("Iteration")
+plt.ylabel("Residual norm")
+plt.title("Effect of spectral ratio on convergence")
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+plt.savefig("power_iteration_spectral_ratio.png", dpi=300)
