@@ -83,3 +83,6 @@ class Testing:
       
     except ValueError as e:
       print("QR iteration stopped",e)
+
+
+
