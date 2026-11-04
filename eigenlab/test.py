@@ -1,4 +1,7 @@
-import eigen_lab
+try:
+  import eigen_lab
+except ImportError:
+  from . import eigen_lab
 import matplotlib.pyplot as plt
 from scipy.linalg import hilbert
 import numpy as np
