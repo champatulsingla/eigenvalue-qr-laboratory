@@ -1,7 +1,7 @@
 # Contributions
 
 ## Ayush (MA26M007)
-**Responsibilities:** QR iteration implementation, test covergence 
+**Responsibilities:** Implemented QR iteration for computing eigenvalues, reusing Augastya's `QRFactorization` class (modified_gramschmidt method) for the factorization step and tested convergence by comparing the eigenvalues from QR iteration with NumPy's eigenvalues.
 
 **Issues:** QR iteration #3
 
